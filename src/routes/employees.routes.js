@@ -1,9 +1,11 @@
 import {Router} from 'express';
-import { getEmployee, createEmployee, updateEmployee, deleteEmployee } from '../controllers/employees.controller.js';
+import { getEmployees, getEmployee, createEmployee, updateEmployee, deleteEmployee } from '../controllers/employees.controller.js';
 
 const router = Router();
 
-router.get('/employees', getEmployee);
+router.get('/employees', getEmployees);
+
+router.get('/employees/:id', getEmployee);
 
 router.post('/employees', createEmployee);
 

@@ -10,7 +10,8 @@ const app = express();
 app.use(express.json());
 
 app.use(indexRoutes);
-app.use(employeesRoutes);
+// Es comun usar el path api cuando se crea un API Rest
+app.use('/api', employeesRoutes);
 
 app.listen(3000);
 
