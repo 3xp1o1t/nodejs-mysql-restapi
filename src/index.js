@@ -6,6 +6,9 @@ import indexRoutes from './routes/index.routes.js';
 
 const app = express();
 
+// Habilitamos el uso del formato JSON por default
+app.use(express.json());
+
 app.use(indexRoutes);
 app.use(employeesRoutes);
 
