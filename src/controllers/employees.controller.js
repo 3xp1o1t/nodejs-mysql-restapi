@@ -46,6 +46,21 @@ export const deleteEmployee = async (req, res) => {
 };
 
 
-export const updateEmployee = (req, res) => {
-  res.send('Actualizando empleado');
+export const updateEmployee = async (req, res) => {
+  // Extramos los datos necesarios para la actualizacion.
+  const { id } = req.params;
+  const { name, salary } = req.body;
+
+  // IFNULL: si no recibe ningun valor, conservara el valor que ya tenia, si no, usara el nuevo ?
+  const [ result ] = await pool.query('UPDATE employee SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE id = ?',
+  [name, salary, id]);
+
+  if (result.affectedRows === 0) return res.status(404).json({
+    message: 'Employee not found'
+  });
+
+  const [rows] = await pool.query('SELECT * FROM employee WHERE id = ?', [id]);
+
+  res.send(rows[0]);
+
 };
