@@ -32,10 +32,20 @@ export const createEmployee = async (req, res) => {
 
 };
 
-export const updateEmployee = (req, res) => {
-  res.send('Actualizando empleado');
+export const deleteEmployee = async (req, res) => {
+  // El pool.query retorna un objeto cuya propiedad affectedRows determina si se modifico o elimino una o mas filas.
+  // Se puede usar para saber si la consulta resulto.
+  const [result] = await pool.query('DELETE FROM employee WHERE id = ?', [req.params.id]);
+
+  if (result.affectedRows <= 0) return res.status(404).json({
+    message: "Employee not found"
+  });
+
+  // El estatus 204 es comun verlo cuando una operacion es exitosa pero no se envia ningun contenido.
+  res.sendStatus(204);
 };
 
-export const deleteEmployee = (req, res) => {
-  res.send('eliminando empleado');
+
+export const updateEmployee = (req, res) => {
+  res.send('Actualizando empleado');
 };
