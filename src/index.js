@@ -13,6 +13,13 @@ app.use(indexRoutes);
 // Es comun usar el path api cuando se crea un API Rest
 app.use('/api', employeesRoutes);
 
+// Middleware para controlar errores 404
+app.use((req, res, next) => {
+  return res.status(404).json({
+    message: "Endpoint not found."
+  });
+});
+
 app.listen(3000);
 
 console.log('Server running on port 3000');
